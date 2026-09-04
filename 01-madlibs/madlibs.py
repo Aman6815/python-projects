@@ -1,7 +1,7 @@
 # string concatenation (aka how to put strings together)
 # suppose we want to create a string that says "subscribe to ______"
 
-youtuber =""  # some string variable
+# youtuber =""  # some string variable
 
 # a few ways to do this
 # print("subscribe to " + youtuber)
