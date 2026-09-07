@@ -1,4 +1,4 @@
-from player import HumanPlayer, RandomComputerPlayer
+from player import HumanPlayer, RandomComputerPlayer, SmartComputerPlayer
 
 
 class TicTacToe:
@@ -15,6 +15,9 @@ class TicTacToe:
 
     def empty_squares(self):
         return " " in self.board
+
+    def num_empty_squares(self):
+        return self.board.count(" ")
 
     def make_move(self, square, letter):
         if square in self.available_moves():
@@ -75,7 +78,7 @@ def play_game(x_player, o_player):
     print("It's a tie!")
 
 
-x_player = RandomComputerPlayer("X")
-o_player = RandomComputerPlayer("O")
-
-play_game(x_player, o_player)
+if __name__ == "__main__":
+    x_player = SmartComputerPlayer("X")
+    o_player = HumanPlayer("O")
+    play_game(x_player, o_player)
