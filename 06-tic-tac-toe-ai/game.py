@@ -10,6 +10,9 @@ class TicTacToe:
     def available_moves(self):
         return [i for i, square in enumerate(self.board) if square == " "]
 
+    def empty_squares(self):
+        return " " in self.board
+
     def make_move(self, square, letter):
         if square in self.available_moves():
             self.board[square] = letter
@@ -57,3 +60,4 @@ game.make_move(2, "X")
 
 game.print_board()
 print("Winner:", game.current_winner)
+print("Empty squares:", game.empty_squares())
