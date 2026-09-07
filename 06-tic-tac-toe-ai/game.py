@@ -1,3 +1,6 @@
+from player import HumanPlayer, RandomComputerPlayer
+
+
 class TicTacToe:
     def __init__(self):
         self.board = [" " for _ in range(9)]
@@ -50,23 +53,15 @@ class TicTacToe:
         return False
 
 
-def play_game():
+def play_game(x_player, o_player):
     game = TicTacToe()
     letter = "X"
 
     while game.empty_squares():
         game.print_board()
 
-        try:
-            square = int(input(f"{letter}'s turn. Choose a square (0-8): "))
-
-            if square not in game.available_moves():
-                print("That square is not available. Try again.")
-                continue
-
-        except ValueError:
-            print("Please enter a number.")
-            continue
+        player = x_player if letter == "X" else o_player
+        square = player.get_move(game)
 
         if game.make_move(square, letter):
             if game.current_winner:
@@ -80,4 +75,7 @@ def play_game():
     print("It's a tie!")
 
 
-play_game()
+x_player = HumanPlayer("X")
+o_player = RandomComputerPlayer("O")
+
+play_game(x_player, o_player)
