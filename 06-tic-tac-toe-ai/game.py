@@ -57,7 +57,16 @@ def play_game():
     while game.empty_squares():
         game.print_board()
 
-        square = int(input(f"{letter}'s turn. Choose a square (0-8): "))
+        try:
+            square = int(input(f"{letter}'s turn. Choose a square (0-8): "))
+
+            if square not in game.available_moves():
+                print("That square is not available. Try again.")
+                continue
+
+        except ValueError:
+            print("Please enter a number.")
+            continue
 
         if game.make_move(square, letter):
             if game.current_winner:
