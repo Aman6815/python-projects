@@ -75,7 +75,7 @@ def play_game(x_player, o_player):
     print("It's a tie!")
 
 
-x_player = HumanPlayer("X")
+x_player = RandomComputerPlayer("X")
 o_player = RandomComputerPlayer("O")
 
 play_game(x_player, o_player)
