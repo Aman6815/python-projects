@@ -50,14 +50,25 @@ class TicTacToe:
         return False
 
 
-game = TicTacToe()
+def play_game():
+    game = TicTacToe()
+    letter = "X"
 
-game.make_move(0, "X")
-game.make_move(3, "O")
-game.make_move(1, "X")
-game.make_move(4, "O")
-game.make_move(2, "X")
+    while game.empty_squares():
+        game.print_board()
 
-game.print_board()
-print("Winner:", game.current_winner)
-print("Empty squares:", game.empty_squares())
+        square = int(input(f"{letter}'s turn. Choose a square (0-8): "))
+
+        if game.make_move(square, letter):
+            if game.current_winner:
+                game.print_board()
+                print(f"{letter} wins!")
+                return
+
+            letter = "O" if letter == "X" else "X"
+
+    game.print_board()
+    print("It's a tie!")
+
+
+play_game()
