@@ -34,14 +34,12 @@ class RandomComputerPlayer(Player):
 
 class SmartComputerPlayer(Player):
     def get_move(self, game):
-        # First move: minimax is overkill (and slow) on an empty board,
-        # every opening square is equally fine, so just pick randomly.
         if len(game.available_moves()) == 9:
             return random.choice(game.available_moves())
 
-        return self.minimax(game, self.letter)["position"]
+        return self.minimax(game, self.letter, -math.inf, math.inf)["position"]
 
-    def minimax(self, state, player):
+    def minimax(self, state, player, alpha, beta):
         max_player = self.letter  # the AI itself
         other_player = "O" if player == "X" else "X"
 
@@ -58,8 +56,6 @@ class SmartComputerPlayer(Player):
         elif not state.empty_squares():
             return {"position": None, "score": 0}
 
-        # Recursive case: try every available move, simulate the
-        # opponent's best response, and remember the best outcome
         if player == max_player:
             best = {"position": None, "score": -math.inf}
         else:
@@ -67,7 +63,7 @@ class SmartComputerPlayer(Player):
 
         for possible_move in state.available_moves():
             state.make_move(possible_move, player)
-            sim_score = self.minimax(state, other_player)
+            sim_score = self.minimax(state, other_player, alpha, beta)
 
             # undo the simulated move (backtracking)
             state.board[possible_move] = " "
@@ -77,8 +73,13 @@ class SmartComputerPlayer(Player):
             if player == max_player:
                 if sim_score["score"] > best["score"]:
                     best = sim_score
+                alpha = max(alpha, best["score"])
             else:
                 if sim_score["score"] < best["score"]:
                     best = sim_score
+                beta = min(beta, best["score"])
+
+            if beta <= alpha:
+                break  # prune: opponent already has a better option elsewhere
 
         return best
