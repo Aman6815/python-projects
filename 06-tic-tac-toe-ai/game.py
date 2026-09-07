@@ -1,6 +1,7 @@
 class TicTacToe:
     def __init__(self):
         self.board = [" " for _ in range(9)]
+        self.current_winner = None
 
     def print_board(self):
         for row in [self.board[i * 3:(i + 1) * 3] for i in range(3)]:
@@ -12,6 +13,10 @@ class TicTacToe:
     def make_move(self, square, letter):
         if square in self.available_moves():
             self.board[square] = letter
+
+            if self.winner(square, letter):
+                self.current_winner = letter
+
             return True
 
         return False
@@ -51,6 +56,4 @@ game.make_move(4, "O")
 game.make_move(2, "X")
 
 game.print_board()
-
-if game.winner(2, "X"):
-    print("X wins!")
+print("Winner:", game.current_winner)
