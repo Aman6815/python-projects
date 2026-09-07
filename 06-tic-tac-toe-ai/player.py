@@ -29,3 +29,11 @@ class HumanPlayer(Player):
 class RandomComputerPlayer(Player):
     def get_move(self, game):
         return random.choice(game.available_moves())
+
+
+class SmartComputerPlayer(Player):
+    def get_move(self, game):
+        if 4 in game.available_moves():
+            return 4
+
+        return random.choice(game.available_moves())
