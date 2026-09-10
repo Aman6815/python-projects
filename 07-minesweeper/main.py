@@ -31,6 +31,24 @@ def place_mines(board):
             mines_placed += 1
 
 
+def count_mines(board, row, column):
+    mine_count = 0
+
+    for row_offset in (-1, 0, 1):
+        for column_offset in (-1, 0, 1):
+            neighbor_row = row + row_offset
+            neighbor_column = column + column_offset
+
+            if (
+                0 <= neighbor_row < BOARD_SIZE
+                and 0 <= neighbor_column < BOARD_SIZE
+                and board[neighbor_row][neighbor_column] == "*"
+            ):
+                mine_count += 1
+
+    return mine_count
+
+
 def display_board(board):
     for row in board:
         print(" ".join(row))
@@ -38,4 +56,8 @@ def display_board(board):
 
 board = create_board()
 place_mines(board)
+
 display_board(board)
+
+print(count_mines(board, 0, 0))
+print(count_mines(board, 2, 2))
