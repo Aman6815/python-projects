@@ -62,7 +62,10 @@ def display_board(board):
         print(" ".join(row))
 
 
-board = create_board()
-place_mines(board)
-calculate_numbers(board)
-display_board(board)
+game_board = create_board()
+place_mines(game_board)
+calculate_numbers(game_board)
+
+visible_board = create_board()
+
+display_board(visible_board)
