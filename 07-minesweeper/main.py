@@ -62,6 +62,21 @@ def display_board(board):
         print(" ".join(row))
 
 
+def get_player_move():
+    while True:
+        try:
+            row = int(input("Enter row (1-5): "))
+            column = int(input("Enter column (1-5): "))
+
+            if 1 <= row <= BOARD_SIZE and 1 <= column <= BOARD_SIZE:
+                return row - 1, column - 1
+
+            print("Please enter numbers between 1 and 5.")
+
+        except ValueError:
+            print("Please enter numbers only.")
+
+
 game_board = create_board()
 place_mines(game_board)
 calculate_numbers(game_board)
@@ -69,3 +84,7 @@ calculate_numbers(game_board)
 visible_board = create_board()
 
 display_board(visible_board)
+
+row, column = get_player_move()
+
+print(f"You selected row {row + 1}, column {column + 1}.")
