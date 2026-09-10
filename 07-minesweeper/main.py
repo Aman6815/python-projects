@@ -49,6 +49,14 @@ def count_mines(board, row, column):
     return mine_count
 
 
+def calculate_numbers(board):
+    for row in range(BOARD_SIZE):
+        for column in range(BOARD_SIZE):
+            if board[row][column] != "*":
+                mine_count = count_mines(board, row, column)
+                board[row][column] = str(mine_count)
+
+
 def display_board(board):
     for row in board:
         print(" ".join(row))
@@ -56,8 +64,5 @@ def display_board(board):
 
 board = create_board()
 place_mines(board)
-
+calculate_numbers(board)
 display_board(board)
-
-print(count_mines(board, 0, 0))
-print(count_mines(board, 2, 2))
