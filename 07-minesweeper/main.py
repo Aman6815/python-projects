@@ -90,34 +90,38 @@ def has_won(visible_board):
     return True
 
 
-game_board = create_board()
-place_mines(game_board)
-calculate_numbers(game_board)
+def play_game():
+    game_board = create_board()
+    place_mines(game_board)
+    calculate_numbers(game_board)
 
-visible_board = create_board()
+    visible_board = create_board()
 
-while True:
-    print()
-    display_board(visible_board)
-
-    row, column = get_player_move()
-
-    if visible_board[row][column] != "□":
-        print("That cell has already been revealed. Choose another cell.")
-        continue
-
-    if game_board[row][column] == "*":
-        visible_board[row][column] = "*"
-
+    while True:
         print()
         display_board(visible_board)
-        print("💣 Game over! You hit a mine.")
-        break
 
-    reveal_cell(game_board, visible_board, row, column)
+        row, column = get_player_move()
 
-    if has_won(visible_board):
-        print()
-        display_board(visible_board)
-        print("🏆 Congratulations! You found all the safe cells.")
-        break
+        if visible_board[row][column] != "□":
+            print("That cell has already been revealed. Choose another cell.")
+            continue
+
+        if game_board[row][column] == "*":
+            visible_board[row][column] = "*"
+
+            print()
+            display_board(visible_board)
+            print("💣 Game over! You hit a mine.")
+            break
+
+        reveal_cell(game_board, visible_board, row, column)
+
+        if has_won(visible_board):
+            print()
+            display_board(visible_board)
+            print("🏆 Congratulations! You found all the safe cells.")
+            break
+
+
+play_game()
