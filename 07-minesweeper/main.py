@@ -100,9 +100,11 @@ def play_game():
     calculate_numbers(game_board)
 
     visible_board = create_board()
+    moves = 0
 
     while True:
         display_board(visible_board)
+        print(f"Moves: {moves}")
 
         row, column = get_player_move()
 
@@ -110,18 +112,20 @@ def play_game():
             print("That cell has already been revealed. Choose another cell.")
             continue
 
+        moves += 1
+
         if game_board[row][column] == "*":
             visible_board[row][column] = "*"
 
             display_board(visible_board)
-            print("💣 Game over! You hit a mine.")
+            print(f"💣 Game over! You hit a mine after {moves} moves.")
             break
 
         reveal_cell(game_board, visible_board, row, column)
 
         if has_won(visible_board):
             display_board(visible_board)
-            print("🏆 Congratulations! You found all the safe cells.")
+            print(f"🏆 Congratulations! You won in {moves} moves.")
             break
 
 
