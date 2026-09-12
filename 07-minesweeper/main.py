@@ -124,4 +124,11 @@ def play_game():
             break
 
 
-play_game()
+while True:
+    play_game()
+
+    choice = input("Play again? (y/n): ").lower()
+
+    if choice != "y":
+        print("Thanks for playing!")
+        break
