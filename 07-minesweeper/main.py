@@ -58,8 +58,12 @@ def calculate_numbers(board):
 
 
 def display_board(board):
-    for row in board:
-        print(" ".join(row))
+    print()
+    print("    " + " ".join(str(column) for column in range(1, BOARD_SIZE + 1)))
+    print("   " + "--" * BOARD_SIZE)
+
+    for row_number, row in enumerate(board, start=1):
+        print(f"{row_number} | " + " ".join(row))
 
 
 def get_player_move():
@@ -98,7 +102,6 @@ def play_game():
     visible_board = create_board()
 
     while True:
-        print()
         display_board(visible_board)
 
         row, column = get_player_move()
@@ -110,7 +113,6 @@ def play_game():
         if game_board[row][column] == "*":
             visible_board[row][column] = "*"
 
-            print()
             display_board(visible_board)
             print("💣 Game over! You hit a mine.")
             break
@@ -118,7 +120,6 @@ def play_game():
         reveal_cell(game_board, visible_board, row, column)
 
         if has_won(visible_board):
-            print()
             display_board(visible_board)
             print("🏆 Congratulations! You found all the safe cells.")
             break
