@@ -93,4 +93,12 @@ while True:
 
     row, column = get_player_move()
 
+    if game_board[row][column] == "*":
+        visible_board[row][column] = "*"
+
+        print()
+        display_board(visible_board)
+        print("💣 Game over! You hit a mine.")
+        break
+
     reveal_cell(game_board, visible_board, row, column)
