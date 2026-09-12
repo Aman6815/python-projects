@@ -87,11 +87,10 @@ calculate_numbers(game_board)
 
 visible_board = create_board()
 
-display_board(visible_board)
+while True:
+    print()
+    display_board(visible_board)
 
-row, column = get_player_move()
+    row, column = get_player_move()
 
-reveal_cell(game_board, visible_board, row, column)
-
-print()
-display_board(visible_board)
+    reveal_cell(game_board, visible_board, row, column)
