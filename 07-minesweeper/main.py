@@ -93,6 +93,10 @@ while True:
 
     row, column = get_player_move()
 
+    if visible_board[row][column] != "□":
+        print("That cell has already been revealed. Choose another cell.")
+        continue
+
     if game_board[row][column] == "*":
         visible_board[row][column] = "*"
 
