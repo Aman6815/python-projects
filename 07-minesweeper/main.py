@@ -77,6 +77,10 @@ def get_player_move():
             print("Please enter numbers only.")
 
 
+def reveal_cell(game_board, visible_board, row, column):
+    visible_board[row][column] = game_board[row][column]
+
+
 game_board = create_board()
 place_mines(game_board)
 calculate_numbers(game_board)
@@ -87,4 +91,7 @@ display_board(visible_board)
 
 row, column = get_player_move()
 
-print(f"You selected row {row + 1}, column {column + 1}.")
+reveal_cell(game_board, visible_board, row, column)
+
+print()
+display_board(visible_board)
