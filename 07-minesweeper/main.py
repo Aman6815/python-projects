@@ -81,6 +81,15 @@ def reveal_cell(game_board, visible_board, row, column):
     visible_board[row][column] = game_board[row][column]
 
 
+def has_won(visible_board):
+    for row in visible_board:
+        for cell in row:
+            if cell == "□":
+                return False
+
+    return True
+
+
 game_board = create_board()
 place_mines(game_board)
 calculate_numbers(game_board)
@@ -106,3 +115,9 @@ while True:
         break
 
     reveal_cell(game_board, visible_board, row, column)
+
+    if has_won(visible_board):
+        print()
+        display_board(visible_board)
+        print("🏆 Congratulations! You found all the safe cells.")
+        break
