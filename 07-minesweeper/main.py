@@ -69,13 +69,13 @@ def display_board(board):
 def get_player_move():
     while True:
         try:
-            row = int(input("Enter row (1-5): "))
-            column = int(input("Enter column (1-5): "))
+            row = int(input(f"Enter row (1-{BOARD_SIZE}): "))
+            column = int(input(f"Enter column (1-{BOARD_SIZE}): "))
 
             if 1 <= row <= BOARD_SIZE and 1 <= column <= BOARD_SIZE:
                 return row - 1, column - 1
 
-            print("Please enter numbers between 1 and 5.")
+            print(f"Please enter numbers between 1 and {BOARD_SIZE}.")
 
         except ValueError:
             print("Please enter numbers only.")
