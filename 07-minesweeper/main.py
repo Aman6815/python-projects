@@ -91,8 +91,25 @@ def get_player_move():
             print("Please enter numbers only.")
 
 
+def get_player_action():
+    while True:
+        choice = input("Choose action (1=reveal, 2=flag): ")
+
+        if choice in ("1", "2"):
+            return choice
+
+        print("Please enter 1 or 2.")
+
+
 def reveal_cell(game_board, visible_board, row, column):
     visible_board[row][column] = game_board[row][column]
+
+
+def toggle_flag(visible_board, row, column):
+    if visible_board[row][column] == "□":
+        visible_board[row][column] = "⚑"
+    elif visible_board[row][column] == "⚑":
+        visible_board[row][column] = "□"
 
 
 def reveal_all_mines(game_board, visible_board):
@@ -105,7 +122,7 @@ def reveal_all_mines(game_board, visible_board):
 def has_won(visible_board):
     for row in visible_board:
         for cell in row:
-            if cell == "□":
+            if cell == "□" or cell == "⚑":
                 return False
 
     return True
@@ -120,9 +137,14 @@ def play_game():
         print(f"Moves: {moves}")
 
         row, column = get_player_move()
+        action = get_player_action()
+
+        if action == "2":
+            toggle_flag(visible_board, row, column)
+            continue
 
         if visible_board[row][column] != "□":
-            print("That cell has already been revealed. Choose another cell.")
+            print("That cell cannot be revealed. Choose another cell.")
             continue
 
         moves += 1
