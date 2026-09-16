@@ -95,6 +95,13 @@ def reveal_cell(game_board, visible_board, row, column):
     visible_board[row][column] = game_board[row][column]
 
 
+def reveal_all_mines(game_board, visible_board):
+    for row in range(BOARD_SIZE):
+        for column in range(BOARD_SIZE):
+            if game_board[row][column] == "*":
+                visible_board[row][column] = "*"
+
+
 def has_won(visible_board):
     for row in visible_board:
         for cell in row:
@@ -122,6 +129,7 @@ def play_game():
 
         if game_board[row][column] == "*":
             visible_board[row][column] = "*"
+            reveal_all_mines(game_board, visible_board)
 
             display_board(visible_board)
             print(f"💣 Game over! You hit a mine after {moves} moves.")
