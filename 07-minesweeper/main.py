@@ -2,7 +2,7 @@ import random
 
 
 BOARD_SIZE = 5
-NUMBER_OF_MINES = 5
+NUMBER_OF_MINES = BOARD_SIZE
 
 
 def create_board():
