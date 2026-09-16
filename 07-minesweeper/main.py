@@ -102,7 +102,31 @@ def get_player_action():
 
 
 def reveal_cell(game_board, visible_board, row, column):
+    if visible_board[row][column] != "□":
+        return
+
     visible_board[row][column] = game_board[row][column]
+
+    if game_board[row][column] != "0":
+        return
+
+    for row_offset in (-1, 0, 1):
+        for column_offset in (-1, 0, 1):
+            neighbor_row = row + row_offset
+            neighbor_column = column + column_offset
+
+            if (
+                0 <= neighbor_row < BOARD_SIZE
+                and 0 <= neighbor_column < BOARD_SIZE
+                and game_board[neighbor_row][neighbor_column] != "*"
+                and visible_board[neighbor_row][neighbor_column] == "□"
+            ):
+                reveal_cell(
+                    game_board,
+                    visible_board,
+                    neighbor_row,
+                    neighbor_column
+                )
 
 
 def toggle_flag(visible_board, row, column):
