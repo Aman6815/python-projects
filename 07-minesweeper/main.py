@@ -108,6 +108,7 @@ def reveal_cell(game_board, visible_board, row, column):
 def toggle_flag(visible_board, row, column):
     if visible_board[row][column] == "□":
         visible_board[row][column] = "⚑"
+
     elif visible_board[row][column] == "⚑":
         visible_board[row][column] = "□"
 
@@ -119,13 +120,21 @@ def reveal_all_mines(game_board, visible_board):
                 visible_board[row][column] = "*"
 
 
-def has_won(visible_board):
-    for row in visible_board:
-        for cell in row:
-            if cell == "□" or cell == "⚑":
-                return False
+def has_won(game_board, visible_board):
+    revealed_safe_cells = 0
 
-    return True
+    for row in range(BOARD_SIZE):
+        for column in range(BOARD_SIZE):
+            if (
+                game_board[row][column] != "*"
+                and visible_board[row][column] != "□"
+                and visible_board[row][column] != "⚑"
+            ):
+                revealed_safe_cells += 1
+
+    total_safe_cells = BOARD_SIZE * BOARD_SIZE - NUMBER_OF_MINES
+
+    return revealed_safe_cells == total_safe_cells
 
 
 def play_game():
@@ -159,7 +168,7 @@ def play_game():
 
         reveal_cell(game_board, visible_board, row, column)
 
-        if has_won(visible_board):
+        if has_won(game_board, visible_board):
             display_board(visible_board)
             print(f"🏆 Congratulations! You won in {moves} moves.")
             break
