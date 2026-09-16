@@ -57,6 +57,16 @@ def calculate_numbers(board):
                 board[row][column] = str(mine_count)
 
 
+def setup_game():
+    game_board = create_board()
+    place_mines(game_board)
+    calculate_numbers(game_board)
+
+    visible_board = create_board()
+
+    return game_board, visible_board
+
+
 def display_board(board):
     print()
     print("    " + " ".join(str(column) for column in range(1, BOARD_SIZE + 1)))
@@ -95,11 +105,7 @@ def has_won(visible_board):
 
 
 def play_game():
-    game_board = create_board()
-    place_mines(game_board)
-    calculate_numbers(game_board)
-
-    visible_board = create_board()
+    game_board, visible_board = setup_game()
     moves = 0
 
     while True:
