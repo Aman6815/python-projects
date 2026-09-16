@@ -19,6 +19,24 @@ def create_board():
     return board
 
 
+def get_neighbors(row, column):
+    neighbors = []
+
+    for row_offset in (-1, 0, 1):
+        for column_offset in (-1, 0, 1):
+            neighbor_row = row + row_offset
+            neighbor_column = column + column_offset
+
+            if (
+                0 <= neighbor_row < BOARD_SIZE
+                and 0 <= neighbor_column < BOARD_SIZE
+                and (neighbor_row, neighbor_column) != (row, column)
+            ):
+                neighbors.append((neighbor_row, neighbor_column))
+
+    return neighbors
+
+
 def place_mines(board):
     mines_placed = 0
 
@@ -34,17 +52,9 @@ def place_mines(board):
 def count_mines(board, row, column):
     mine_count = 0
 
-    for row_offset in (-1, 0, 1):
-        for column_offset in (-1, 0, 1):
-            neighbor_row = row + row_offset
-            neighbor_column = column + column_offset
-
-            if (
-                0 <= neighbor_row < BOARD_SIZE
-                and 0 <= neighbor_column < BOARD_SIZE
-                and board[neighbor_row][neighbor_column] == "*"
-            ):
-                mine_count += 1
+    for neighbor_row, neighbor_column in get_neighbors(row, column):
+        if board[neighbor_row][neighbor_column] == "*":
+            mine_count += 1
 
     return mine_count
 
@@ -110,23 +120,17 @@ def reveal_cell(game_board, visible_board, row, column):
     if game_board[row][column] != "0":
         return
 
-    for row_offset in (-1, 0, 1):
-        for column_offset in (-1, 0, 1):
-            neighbor_row = row + row_offset
-            neighbor_column = column + column_offset
-
-            if (
-                0 <= neighbor_row < BOARD_SIZE
-                and 0 <= neighbor_column < BOARD_SIZE
-                and game_board[neighbor_row][neighbor_column] != "*"
-                and visible_board[neighbor_row][neighbor_column] == "□"
-            ):
-                reveal_cell(
-                    game_board,
-                    visible_board,
-                    neighbor_row,
-                    neighbor_column
-                )
+    for neighbor_row, neighbor_column in get_neighbors(row, column):
+        if (
+            game_board[neighbor_row][neighbor_column] != "*"
+            and visible_board[neighbor_row][neighbor_column] == "□"
+        ):
+            reveal_cell(
+                game_board,
+                visible_board,
+                neighbor_row,
+                neighbor_column
+            )
 
 
 def toggle_flag(visible_board, row, column):
