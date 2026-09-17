@@ -4,6 +4,10 @@ import random
 BOARD_SIZE = 5
 NUMBER_OF_MINES = BOARD_SIZE
 
+HIDDEN_CELL = "□"
+MINE = "*"
+FLAG = "⚑"
+
 
 def create_board():
     board = []
