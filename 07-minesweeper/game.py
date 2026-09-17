@@ -187,9 +187,13 @@ def reveal_all_mines(game_board, visible_board):
 
 
 def has_won(game_board, visible_board):
-    revealed_safe_cells = 0
-
     board_size = len(game_board)
+
+    total_cells = board_size * board_size
+    total_mines = sum(row.count(MINE) for row in game_board)
+    total_safe_cells = total_cells - total_mines
+
+    revealed_safe_cells = 0
 
     for row in range(board_size):
         for column in range(board_size):
@@ -199,15 +203,6 @@ def has_won(game_board, visible_board):
                 and visible_board[row][column] != FLAG
             ):
                 revealed_safe_cells += 1
-
-    total_cells = board_size * board_size
-
-    total_mines = 0
-
-    for row in game_board:
-        total_mines += row.count(MINE)
-
-    total_safe_cells = total_cells - total_mines
 
     return revealed_safe_cells == total_safe_cells
 
