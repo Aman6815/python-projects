@@ -240,11 +240,16 @@ def play_game():
             break
 
 
-while True:
-    play_game()
+def main():
+    while True:
+        play_game()
 
-    choice = get_replay_choice()
+        choice = get_replay_choice()
 
-    if choice == "n":
-        print("Thanks for playing!")
-        break
+        if choice == "n":
+            print("Thanks for playing!")
+            break
+
+
+if __name__ == "__main__":
+    main()
