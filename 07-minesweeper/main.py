@@ -19,6 +19,13 @@ def create_board():
     return board
 
 
+def validate_game_settings():
+    total_cells = BOARD_SIZE * BOARD_SIZE
+
+    if NUMBER_OF_MINES >= total_cells:
+        raise ValueError("Number of mines must be less than the board size.")
+
+
 def get_neighbors(row, column):
     neighbors = []
 
@@ -68,6 +75,8 @@ def calculate_numbers(board):
 
 
 def setup_game():
+    validate_game_settings()
+
     game_board = create_board()
     place_mines(game_board)
     calculate_numbers(game_board)
