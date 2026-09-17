@@ -145,9 +145,14 @@ def reveal_cell(game_board, visible_board, row, column):
 def toggle_flag(visible_board, row, column):
     if visible_board[row][column] == "□":
         visible_board[row][column] = "⚑"
+        print("Cell flagged.")
 
     elif visible_board[row][column] == "⚑":
         visible_board[row][column] = "□"
+        print("Flag removed.")
+
+    else:
+        print("You cannot flag a revealed cell.")
 
 
 def reveal_all_mines(game_board, visible_board):
