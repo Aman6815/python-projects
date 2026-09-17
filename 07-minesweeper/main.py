@@ -120,8 +120,12 @@ def get_player_action():
         print("Please enter 1 or 2.")
 
 
+def can_reveal(visible_board, row, column):
+    return visible_board[row][column] == "□"
+
+
 def reveal_cell(game_board, visible_board, row, column):
-    if visible_board[row][column] != "□":
+    if not can_reveal(visible_board, row, column):
         return
 
     visible_board[row][column] = game_board[row][column]
@@ -194,7 +198,7 @@ def play_game():
             toggle_flag(visible_board, row, column)
             continue
 
-        if visible_board[row][column] != "□":
+        if not can_reveal(visible_board, row, column):
             print("That cell cannot be revealed. Choose another cell.")
             continue
 
