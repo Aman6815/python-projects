@@ -120,6 +120,16 @@ def get_player_action():
         print("Please enter 1 or 2.")
 
 
+def get_replay_choice():
+    while True:
+        choice = input("Play again? (y/n): ").lower()
+
+        if choice in ("y", "n"):
+            return choice
+
+        print("Please enter y or n.")
+
+
 def can_reveal(visible_board, row, column):
     return visible_board[row][column] == "□"
 
@@ -223,8 +233,8 @@ def play_game():
 while True:
     play_game()
 
-    choice = input("Play again? (y/n): ").lower()
+    choice = get_replay_choice()
 
-    if choice != "y":
+    if choice == "n":
         print("Thanks for playing!")
         break
