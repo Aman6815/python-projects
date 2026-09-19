@@ -7,6 +7,9 @@ def linear_search(numbers, target):
 
 
 def binary_search(numbers, target):
+    if numbers != sorted(numbers):
+        raise ValueError("Binary search requires a sorted list.")
+
     low = 0
     high = len(numbers) - 1
 
