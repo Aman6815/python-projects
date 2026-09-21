@@ -1,15 +1,39 @@
 from search import binary_search
 
 
-numbers = [3, 7, 12, 18, 25, 31, 42, 56, 68, 79]
+def get_numbers():
+    while True:
+        user_input = input("Enter numbers separated by spaces: ")
+
+        try:
+            numbers = [int(number) for number in user_input.split()]
+        except ValueError:
+            print("Invalid input. Please enter whole numbers only.")
+            continue
+
+        if not numbers:
+            print("Please enter at least one number.")
+            continue
+
+        return sorted(numbers)
+
+
+def get_target():
+    while True:
+        user_input = input("Enter a number to search for: ")
+
+        try:
+            return int(user_input)
+        except ValueError:
+            print("Invalid input. Please enter a whole number.")
 
 
 def main():
-    try:
-        target = int(input("Enter a number to search for: "))
-    except ValueError:
-        print("Invalid input. Please enter a whole number.")
-        return
+    numbers = get_numbers()
+
+    print(f"Sorted list: {numbers}")
+
+    target = get_target()
 
     index = binary_search(numbers, target)
 
