@@ -1,4 +1,4 @@
-from search import binary_search
+from search import binary_search, linear_search
 
 
 def get_numbers():
@@ -28,14 +28,32 @@ def get_target():
             print("Invalid input. Please enter a whole number.")
 
 
+def choose_search_algorithm():
+    while True:
+        print("\nChoose a search algorithm:")
+        print("1. Linear Search")
+        print("2. Binary Search")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            return linear_search
+
+        if choice == "2":
+            return binary_search
+
+        print("Invalid choice. Please enter 1 or 2.")
+
+
 def main():
     numbers = get_numbers()
 
     print(f"Sorted list: {numbers}")
 
     target = get_target()
+    search_algorithm = choose_search_algorithm()
 
-    index = binary_search(numbers, target)
+    index = search_algorithm(numbers, target)
 
     if index != -1:
         print(f"{target} was found at index {index}.")
