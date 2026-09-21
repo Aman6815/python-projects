@@ -1,3 +1,5 @@
+import time
+
 from search import binary_search, linear_search
 
 
@@ -45,6 +47,16 @@ def choose_search_algorithm():
         print("Invalid choice. Please enter 1 or 2.")
 
 
+def measure_search_time(search_algorithm, numbers, target):
+    start_time = time.perf_counter()
+    index = search_algorithm(numbers, target)
+    end_time = time.perf_counter()
+
+    elapsed_time = end_time - start_time
+
+    return index, elapsed_time
+
+
 def main():
     numbers = get_numbers()
 
@@ -53,12 +65,18 @@ def main():
     target = get_target()
     search_algorithm = choose_search_algorithm()
 
-    index = search_algorithm(numbers, target)
+    index, elapsed_time = measure_search_time(
+        search_algorithm,
+        numbers,
+        target
+    )
 
     if index != -1:
         print(f"{target} was found at index {index}.")
     else:
         print(f"{target} was not found in the list.")
+
+    print(f"Search time: {elapsed_time:.10f} seconds")
 
 
 if __name__ == "__main__":
