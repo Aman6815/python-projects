@@ -1,13 +1,20 @@
 def linear_search(numbers, target):
-    for index in range(len(numbers)):
-        if numbers[index] == target:
+    for index, number in enumerate(numbers):
+        if number == target:
             return index
 
     return -1
 
 
+def is_sorted(numbers):
+    return all(
+        numbers[index] <= numbers[index + 1]
+        for index in range(len(numbers) - 1)
+    )
+
+
 def binary_search(numbers, target):
-    if numbers != sorted(numbers):
+    if not is_sorted(numbers):
         raise ValueError("Binary search requires a sorted list.")
 
     low = 0
