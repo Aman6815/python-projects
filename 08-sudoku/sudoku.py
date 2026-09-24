@@ -1,3 +1,21 @@
+def validate_puzzle(puzzle):
+    """Raise ValueError if the puzzle has an invalid structure."""
+
+    if len(puzzle) != 9:
+        raise ValueError("Puzzle must contain exactly 9 rows.")
+
+    for row in puzzle:
+        if len(row) != 9:
+            raise ValueError("Each row must contain exactly 9 values.")
+
+        for value in row:
+            if not isinstance(value, int):
+                raise ValueError("Puzzle values must be integers.")
+
+            if value < -1 or value > 9:
+                raise ValueError("Puzzle values must be between -1 and 9.")
+
+
 def find_next_empty(puzzle):
     """Return the position of the first empty cell."""
 
@@ -12,20 +30,16 @@ def find_next_empty(puzzle):
 def is_valid(puzzle, guess, row, col):
     """Return True if a guess is valid at the given position."""
 
-    # Check the row.
     if guess in puzzle[row]:
         return False
 
-    # Check the column.
     for current_row in range(9):
         if puzzle[current_row][col] == guess:
             return False
 
-    # Find the top-left corner of the 3x3 box.
     row_start = (row // 3) * 3
     col_start = (col // 3) * 3
 
-    # Check the 3x3 box.
     for current_row in range(row_start, row_start + 3):
         for current_col in range(col_start, col_start + 3):
             if puzzle[current_row][current_col] == guess:
@@ -36,6 +50,8 @@ def is_valid(puzzle, guess, row, col):
 
 def solve_sudoku(puzzle):
     """Solve the puzzle using backtracking."""
+
+    validate_puzzle(puzzle)
 
     row, col = find_next_empty(puzzle)
 
