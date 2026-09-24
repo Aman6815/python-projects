@@ -49,9 +49,15 @@ def is_valid(puzzle, guess, row, col):
 
 
 def solve_sudoku(puzzle):
-    """Solve the puzzle using backtracking."""
+    """Validate and solve the puzzle using backtracking."""
 
     validate_puzzle(puzzle)
+
+    return _solve(puzzle)
+
+
+def _solve(puzzle):
+    """Solve a validated puzzle using backtracking."""
 
     row, col = find_next_empty(puzzle)
 
@@ -62,7 +68,7 @@ def solve_sudoku(puzzle):
         if is_valid(puzzle, guess, row, col):
             puzzle[row][col] = guess
 
-            if solve_sudoku(puzzle):
+            if _solve(puzzle):
                 return True
 
             puzzle[row][col] = -1
