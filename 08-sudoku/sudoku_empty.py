@@ -34,6 +34,34 @@ def is_valid(puzzle, guess, row, col):
     return True
 
 
+def solve_sudoku(puzzle):
+    """Solve the puzzle using backtracking."""
+
+    # Find the next empty cell.
+    row, col = find_next_empty(puzzle)
+
+    # No empty cells means the puzzle is solved.
+    if row is None:
+        return True
+
+    # Try every possible number.
+    for guess in range(1, 10):
+
+        # Only place valid guesses.
+        if is_valid(puzzle, guess, row, col):
+            puzzle[row][col] = guess
+
+            # Continue solving from the new state.
+            if solve_sudoku(puzzle):
+                return True
+
+            # The guess eventually failed, so undo it.
+            puzzle[row][col] = -1
+
+    # No number worked in this position.
+    return False
+
+
 example_board = [
     [3, 9, -1, -1, 5, -1, -1, -1, -1],
     [-1, -1, -1, 2, -1, -1, -1, -1, 5],
@@ -49,8 +77,10 @@ example_board = [
 ]
 
 
-row, col = find_next_empty(example_board)
+if solve_sudoku(example_board):
+    print("Sudoku solved!")
 
-print("First empty cell:", row, col)
-print("Is 4 valid?", is_valid(example_board, 4, row, col))
-print("Is 3 valid?", is_valid(example_board, 3, row, col))
+    for row in example_board:
+        print(row)
+else:
+    print("This Sudoku has no solution.")
