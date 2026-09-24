@@ -76,8 +76,17 @@ def _solve(puzzle):
     return False
 
 
-if __name__ == "__main__":
-    example_board = [
+def print_board(puzzle):
+    """Print the Sudoku board in a readable format."""
+
+    for row in puzzle:
+        print(" ".join(str(value) for value in row))
+
+
+def main():
+    """Run the Sudoku solver with an example puzzle."""
+
+    puzzle = [
         [3, 9, -1, -1, 5, -1, -1, -1, -1],
         [-1, -1, -1, 2, -1, -1, -1, -1, 5],
         [-1, -1, -1, 7, 1, 9, -1, 8, -1],
@@ -91,10 +100,17 @@ if __name__ == "__main__":
         [1, -1, 9, -1, -1, -1, 2, -1, -1],
     ]
 
-    if solve_sudoku(example_board):
-        print("Sudoku solved!")
+    print("Original puzzle:")
+    print_board(puzzle)
 
-        for row in example_board:
-            print(row)
+    print("\nSolving...")
+
+    if solve_sudoku(puzzle):
+        print("\nSolved puzzle:")
+        print_board(puzzle)
     else:
-        print("This Sudoku has no solution.")
+        print("\nThis Sudoku has no solution.")
+
+
+if __name__ == "__main__":
+    main()
