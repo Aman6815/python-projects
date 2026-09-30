@@ -113,6 +113,18 @@ class Image:
 
         return self.apply_kernel(kernel)
 
+    def combine(self, other):
+        """Combine two images using their pixel values."""
+
+        if self.array.shape != other.array.shape:
+            raise ValueError("Images must have the same dimensions.")
+
+        combined = np.sqrt(
+            self.array ** 2 + other.array ** 2
+        )
+
+        return Image(array=combined)
+
     def save(self, filename):
         output = np.clip(self.array, 0, 1)
         output = (output * 255).astype(np.uint8)
