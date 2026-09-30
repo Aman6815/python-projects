@@ -53,25 +53,67 @@ class Image:
         return self.array.shape[2]
 
     def brighten(self, factor):
-        """Return a brighter or darker copy of the image."""
-
         if factor < 0:
             raise ValueError("Brightness factor cannot be negative.")
 
-        new_array = self.array * factor
-        return Image(array=new_array)
+        return Image(array=self.array * factor)
 
     def adjust_contrast(self, factor):
-        """Return a copy of the image with adjusted contrast."""
-
         middle = 0.5
         new_array = (self.array - middle) * factor + middle
 
         return Image(array=new_array)
 
-    def save(self, filename):
-        """Save the image to a file."""
+    def apply_kernel(self, kernel):
+        """Apply a 2D kernel to the image."""
 
+        kernel = np.asarray(kernel, dtype=np.float32)
+
+        if kernel.ndim != 2:
+            raise ValueError("Kernel must be a 2D array.")
+
+        kernel_height, kernel_width = kernel.shape
+
+        if kernel_height % 2 == 0 or kernel_width % 2 == 0:
+            raise ValueError("Kernel dimensions must be odd.")
+
+        pad_y = kernel_height // 2
+        pad_x = kernel_width // 2
+
+        padded = np.pad(
+            self.array,
+            ((pad_y, pad_y), (pad_x, pad_x), (0, 0)),
+            mode="edge",
+        )
+
+        result = np.zeros_like(self.array)
+
+        for y in range(self.height):
+            for x in range(self.width):
+                region = padded[
+                    y:y + kernel_height,
+                    x:x + kernel_width,
+                    :
+                ]
+
+                result[y, x] = np.sum(
+                    region * kernel[:, :, np.newaxis],
+                    axis=(0, 1),
+                )
+
+        return Image(array=result)
+
+    def blur(self, size=3):
+        """Blur the image using an averaging kernel."""
+
+        if size < 1 or size % 2 == 0:
+            raise ValueError("Blur size must be a positive odd number.")
+
+        kernel = np.ones((size, size), dtype=np.float32) / (size * size)
+
+        return self.apply_kernel(kernel)
+
+    def save(self, filename):
         output = np.clip(self.array, 0, 1)
         output = (output * 255).astype(np.uint8)
 
