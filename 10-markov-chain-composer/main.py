@@ -7,14 +7,25 @@ def load_text(file_path):
 def clean_text(text):
     """Convert text to lowercase and remove unnecessary whitespace."""
     text = text.lower()
-    text = " ".join(text.split())
-
-    return text
+    return " ".join(text.split())
 
 
 def tokenize(text):
     """Split text into individual words."""
     return text.split()
+
+
+def build_markov_chain(words):
+    """Build a mapping of each word to the words that follow it."""
+    chain = {}
+
+    for current_word, next_word in zip(words, words[1:]):
+        if current_word not in chain:
+            chain[current_word] = []
+
+        chain[current_word].append(next_word)
+
+    return chain
 
 
 def main():
@@ -24,8 +35,12 @@ def main():
     cleaned_text = clean_text(text)
     words = tokenize(cleaned_text)
 
-    print("Words:")
-    print(words)
+    chain = build_markov_chain(words)
+
+    print("Markov chain:")
+
+    for word, next_words in chain.items():
+        print(f"{word} -> {next_words}")
 
 
 if __name__ == "__main__":
