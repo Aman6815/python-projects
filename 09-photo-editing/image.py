@@ -52,6 +52,15 @@ class Image:
     def channels(self):
         return self.array.shape[2]
 
+    def brighten(self, factor):
+        """Return a brighter or darker copy of the image."""
+
+        if factor < 0:
+            raise ValueError("Brightness factor cannot be negative.")
+
+        new_array = self.array * factor
+        return Image(array=new_array)
+
     def save(self, filename):
         """Save the image to a file."""
 
