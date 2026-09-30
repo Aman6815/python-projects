@@ -125,6 +125,24 @@ class Image:
 
         return Image(array=combined)
 
+    def grayscale(self):
+        """Convert the image to grayscale."""
+
+        gray = (
+            0.299 * self.array[:, :, 0]
+            + 0.587 * self.array[:, :, 1]
+            + 0.114 * self.array[:, :, 2]
+        )
+
+        gray_array = np.stack([gray, gray, gray], axis=2)
+
+        return Image(array=gray_array)
+
+    def invert(self):
+        """Invert the image colors."""
+
+        return Image(array=1.0 - self.array)
+
     def save(self, filename):
         output = np.clip(self.array, 0, 1)
         output = (output * 255).astype(np.uint8)

@@ -27,7 +27,13 @@ vertical_kernel = [
 horizontal_edges = image.apply_kernel(horizontal_kernel)
 vertical_edges = image.apply_kernel(vertical_kernel)
 
-horizontal_edges.save("output/edges_horizontal.png")
-vertical_edges.save("output/edges_vertical.png")
+edges = horizontal_edges.combine(vertical_edges)
+edges.save("output/lake_edges.png")
 
-print("Image transformations completed.")
+print("All image transformations completed.")
+
+gray_image = image.grayscale()
+gray_image.save("output/lake_grayscale.png")
+
+inverted_image = image.invert()
+inverted_image.save("output/lake_inverted.png")
