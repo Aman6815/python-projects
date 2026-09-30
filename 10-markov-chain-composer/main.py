@@ -12,17 +12,20 @@ def clean_text(text):
     return text
 
 
+def tokenize(text):
+    """Split text into individual words."""
+    return text.split()
+
+
 def main():
     file_path = "data/sample.txt"
 
     text = load_text(file_path)
     cleaned_text = clean_text(text)
+    words = tokenize(cleaned_text)
 
-    print("Original text:")
-    print(text)
-
-    print("\nCleaned text:")
-    print(cleaned_text)
+    print("Words:")
+    print(words)
 
 
 if __name__ == "__main__":
