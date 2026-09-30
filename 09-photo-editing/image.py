@@ -61,6 +61,14 @@ class Image:
         new_array = self.array * factor
         return Image(array=new_array)
 
+    def adjust_contrast(self, factor):
+        """Return a copy of the image with adjusted contrast."""
+
+        middle = 0.5
+        new_array = (self.array - middle) * factor + middle
+
+        return Image(array=new_array)
+
     def save(self, filename):
         """Save the image to a file."""
 
