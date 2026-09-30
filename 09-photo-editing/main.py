@@ -1,56 +1,50 @@
 from image import Image
 
 
-image = Image("input/lake.png")
+def edit_image(input_path, output_dir):
+    """Apply several edits to an image."""
 
-# Brightness
-bright_image = image.brighten(1.5)
-bright_image.save("output/lake_bright.png")
+    image = Image(input_path)
 
-# Contrast
-contrast_image = image.adjust_contrast(1.5)
-contrast_image.save("output/lake_contrast.png")
+    image.brighten(1.5).save(output_dir / "bright.png")
+    image.adjust_contrast(1.5).save(output_dir / "contrast.png")
+    image.blur(5).save(output_dir / "blurred.png")
 
-# Blur
-blurred_image = image.blur(5)
-blurred_image.save("output/lake_blurred.png")
+    horizontal_kernel = [
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1],
+    ]
 
-# Edge detection
-horizontal_kernel = [
-    [-1, 0, 1],
-    [-2, 0, 2],
-    [-1, 0, 1],
-]
+    vertical_kernel = [
+        [-1, -2, -1],
+        [0, 0, 0],
+        [1, 2, 1],
+    ]
 
-vertical_kernel = [
-    [-1, -2, -1],
-    [0, 0, 0],
-    [1, 2, 1],
-]
+    horizontal_edges = image.apply_kernel(horizontal_kernel)
+    vertical_edges = image.apply_kernel(vertical_kernel)
 
-horizontal_edges = image.apply_kernel(horizontal_kernel)
-vertical_edges = image.apply_kernel(vertical_kernel)
+    horizontal_edges.save(output_dir / "edges_horizontal.png")
+    vertical_edges.save(output_dir / "edges_vertical.png")
 
-edges = horizontal_edges.combine(vertical_edges)
-edges.save("output/lake_edges.png")
+    horizontal_edges.combine(vertical_edges).save(
+        output_dir / "edges.png"
+    )
 
-# Grayscale
-gray_image = image.grayscale()
-gray_image.save("output/lake_grayscale.png")
+    image.grayscale().save(output_dir / "grayscale.png")
+    image.invert().save(output_dir / "inverted.png")
+    image.flip_horizontal().save(output_dir / "flip_horizontal.png")
+    image.flip_vertical().save(output_dir / "flip_vertical.png")
+    image.rotate_90().save(output_dir / "rotated.png")
 
-# Invert
-inverted_image = image.invert()
-inverted_image.save("output/lake_inverted.png")
 
-# Flip
-flipped_horizontal = image.flip_horizontal()
-flipped_horizontal.save("output/lake_flip_horizontal.png")
+if __name__ == "__main__":
+    from pathlib import Path
 
-flipped_vertical = image.flip_vertical()
-flipped_vertical.save("output/lake_flip_vertical.png")
+    input_path = Path("input/lake.png")
+    output_dir = Path("output")
 
-# Rotate
-rotated_image = image.rotate_90()
-rotated_image.save("output/lake_rotated.png")
+    edit_image(input_path, output_dir)
 
-print("All image transformations completed.")
+    print("Photo editing completed successfully.")
