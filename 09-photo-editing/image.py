@@ -63,6 +63,9 @@ class Image:
     def adjust_contrast(self, factor):
         """Return a copy of the image with adjusted contrast."""
 
+        if factor < 0:
+            raise ValueError("Contrast factor cannot be negative.")
+
         middle = 0.5
         new_array = (self.array - middle) * factor + middle
 
@@ -120,6 +123,9 @@ class Image:
     def combine(self, other):
         """Combine two images using their pixel values."""
 
+        if not isinstance(other, Image):
+            raise TypeError("Can only combine with another Image.")
+
         if self.array.shape != other.array.shape:
             raise ValueError("Images must have the same dimensions.")
 
@@ -165,8 +171,11 @@ class Image:
     def save(self, filename):
         """Save the image to a file."""
 
+        path = Path(filename)
+        path.parent.mkdir(parents=True, exist_ok=True)
+
         output = np.clip(self.array, 0, 1)
         output = (output * 255).astype(np.uint8)
 
         image = PILImage.fromarray(output, "RGB")
-        image.save(filename)
+        image.save(path)
