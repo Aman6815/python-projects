@@ -53,12 +53,16 @@ class Image:
         return self.array.shape[2]
 
     def brighten(self, factor):
+        """Return a brighter or darker copy of the image."""
+
         if factor < 0:
             raise ValueError("Brightness factor cannot be negative.")
 
         return Image(array=self.array * factor)
 
     def adjust_contrast(self, factor):
+        """Return a copy of the image with adjusted contrast."""
+
         middle = 0.5
         new_array = (self.array - middle) * factor + middle
 
@@ -143,7 +147,24 @@ class Image:
 
         return Image(array=1.0 - self.array)
 
+    def flip_horizontal(self):
+        """Flip the image from left to right."""
+
+        return Image(array=np.fliplr(self.array).copy())
+
+    def flip_vertical(self):
+        """Flip the image from top to bottom."""
+
+        return Image(array=np.flipud(self.array).copy())
+
+    def rotate_90(self):
+        """Rotate the image 90 degrees clockwise."""
+
+        return Image(array=np.rot90(self.array, k=3).copy())
+
     def save(self, filename):
+        """Save the image to a file."""
+
         output = np.clip(self.array, 0, 1)
         output = (output * 255).astype(np.uint8)
 
