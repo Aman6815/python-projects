@@ -53,19 +53,45 @@ def generate_text(chain, word_count):
     return " ".join(generated_words)
 
 
-def main():
+def run_program():
+    """Run the text generation application."""
     file_path = "data/sample.txt"
 
     text = load_text(file_path)
     cleaned_text = clean_text(text)
     words = tokenize(cleaned_text)
-
     chain = build_markov_chain(words)
 
-    generated_text = generate_text(chain, 20)
+    print("Markov Text Composer")
+    print("--------------------")
 
-    print("Generated text:")
-    print(generated_text)
+    while True:
+        user_input = input(
+            "\nHow many words should I generate? (q to quit): "
+        ).strip()
+
+        if user_input.lower() == "q":
+            print("Goodbye!")
+            break
+
+        try:
+            word_count = int(user_input)
+
+            if word_count <= 0:
+                print("Please enter a positive number.")
+                continue
+
+            generated_text = generate_text(chain, word_count)
+
+            print("\nGenerated text:")
+            print(generated_text)
+
+        except ValueError:
+            print("Please enter a valid number.")
+
+
+def main():
+    run_program()
 
 
 if __name__ == "__main__":
