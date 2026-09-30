@@ -1,3 +1,6 @@
+import random
+
+
 def load_text(file_path):
     """Read text from a file and return it as a string."""
     with open(file_path, "r", encoding="utf-8") as file:
@@ -28,6 +31,28 @@ def build_markov_chain(words):
     return chain
 
 
+def generate_text(chain, word_count):
+    """Generate new text using the Markov chain."""
+    if word_count <= 0:
+        raise ValueError("Word count must be greater than 0.")
+
+    start_word = random.choice(list(chain.keys()))
+    generated_words = [start_word]
+
+    current_word = start_word
+
+    for _ in range(word_count - 1):
+        next_words = chain.get(current_word)
+
+        if not next_words:
+            break
+
+        current_word = random.choice(next_words)
+        generated_words.append(current_word)
+
+    return " ".join(generated_words)
+
+
 def main():
     file_path = "data/sample.txt"
 
@@ -37,10 +62,10 @@ def main():
 
     chain = build_markov_chain(words)
 
-    print("Markov chain:")
+    generated_text = generate_text(chain, 20)
 
-    for word, next_words in chain.items():
-        print(f"{word} -> {next_words}")
+    print("Generated text:")
+    print(generated_text)
 
 
 if __name__ == "__main__":
