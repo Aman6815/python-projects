@@ -2,36 +2,43 @@ import random
 
 
 def build_markov_chain(words):
-    """Build a mapping of each word to the words that follow it."""
+    """Build a Markov chain using pairs of consecutive words."""
     chain = {}
 
-    for current_word, next_word in zip(words, words[1:]):
-        if current_word not in chain:
-            chain[current_word] = []
+    if len(words) < 3:
+        return chain
 
-        chain[current_word].append(next_word)
+    for first, second, next_word in zip(words, words[1:], words[2:]):
+        key = (first, second)
+
+        if key not in chain:
+            chain[key] = []
+
+        chain[key].append(next_word)
 
     return chain
 
 
 def generate_text(chain, word_count):
-    """Generate new text using the Markov chain."""
+    """Generate text using the Markov chain."""
     if not chain:
         raise ValueError("Cannot generate text from an empty chain.")
 
     if word_count <= 0:
         raise ValueError("Word count must be greater than 0.")
 
-    current_word = random.choice(list(chain.keys()))
-    generated_words = [current_word]
+    first, second = random.choice(list(chain.keys()))
+    generated_words = [first, second]
 
-    for _ in range(word_count - 1):
-        next_words = chain.get(current_word)
+    while len(generated_words) < word_count:
+        next_words = chain.get((first, second))
 
         if not next_words:
             break
 
-        current_word = random.choice(next_words)
-        generated_words.append(current_word)
+        next_word = random.choice(next_words)
+        generated_words.append(next_word)
 
-    return " ".join(generated_words)
+        first, second = second, next_word
+
+    return " ".join(generated_words[:word_count])
