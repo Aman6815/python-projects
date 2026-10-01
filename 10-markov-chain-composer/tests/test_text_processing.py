@@ -12,6 +12,13 @@ class TestTextProcessing(unittest.TestCase):
 
         self.assertEqual(result, "hello world python")
 
+    def test_clean_text_removes_punctuation(self):
+        text = "Hello, world! Python is great."
+
+        result = clean_text(text)
+
+        self.assertEqual(result, "hello world python is great")
+
     def test_tokenize(self):
         text = "hello world python"
 
