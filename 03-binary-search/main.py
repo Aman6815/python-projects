@@ -3,6 +3,7 @@ import time
 from search import binary_search, linear_search
 
 
+
 def get_numbers():
     while True:
         user_input = input("Enter numbers separated by spaces: ")
