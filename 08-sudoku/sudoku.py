@@ -16,6 +16,8 @@ def validate_puzzle(puzzle):
                 raise ValueError("Puzzle values must be between -1 and 9.")
 
 
+
+
 def find_next_empty(puzzle):
     """Return the position of the first empty cell."""
 
