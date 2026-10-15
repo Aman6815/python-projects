@@ -8,6 +8,7 @@ def create_chain(file_path):
     cleaned_text = clean_text(text)
     words = tokenize(cleaned_text)
 
+    
     if len(words) < 3:
         raise ValueError("The source text must contain at least 3 words.")
 
