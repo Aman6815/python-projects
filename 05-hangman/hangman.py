@@ -4,7 +4,6 @@ from hangman_visual import lives_visual_dict
 import string
 
 
-
 def get_valid_word(words):
     word = random.choice(words)  # randomly chooses something from the list
     while '-' in word or ' ' in word:
@@ -22,6 +21,7 @@ def hangman():
     lives = 7
 
     # getting user input
+    
     while len(word_letters) > 0 and lives > 0:
         # letters used
         # ' '.join(['a', 'b', 'cd']) --> 'a b cd'
