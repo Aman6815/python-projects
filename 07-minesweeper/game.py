@@ -9,6 +9,7 @@ MINE = "*"
 FLAG = "⚑"
 
 
+
 def create_board():
     board = []
 
